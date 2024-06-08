@@ -5,6 +5,7 @@
 # =========================================
 # COPY WEB-TIER CODE FROM S3
 # =========================================
+#!/bin/bash
 cd ~
 sudo aws s3 cp s3://<your-bucket-name>/application-code/web-tier web-tier --recursive
 cd web-tier
@@ -37,7 +38,6 @@ sudo yum install nginx -y
 cd /etc/nginx
 sudo mv nginx.conf nginx-backup.conf
 sudo aws s3 cp s3://mys3bucket07062024/application-code/nginx.conf . 
-sudo service nginx restart
-sudo service nginx status  #(Optional)
 sudo chmod -R 755 /home/ec2-user
+sudo service nginx restart
 sudo chkconfig nginx on
