@@ -6,15 +6,15 @@
 # COPY WEB-TIER CODE FROM S3
 # =========================================
 #!/bin/bash
+sudo -su ec2-user
 cd ~
 
 # !!! IMP !!!
 # MODIFY BELOW CODE WITH YOUR S3 BUCKET NAME
 sudo aws s3 cp s3://<YOUR-S3-BUCKET-NAME>/application-code/web-tier web-tier --recursive
-
-cd web-tier
 sudo chown -R ec2-user:ec2-user /home/ec2-user/web-tier
 sudo chmod -R 755 /home/ec2-user/web-tier
+sudo chmod -R 755 /home/ec2-user
 
 # =========================================
 # INSTALLING NODEJS (FOR USING REACT LIBRARY)
@@ -24,13 +24,15 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 source ~/.bashrc
 nvm install 16
 nvm use 16
+cd ~/web-tier
 npm install
-npm audit fix
+#npm audit fix
 
 # =========================================
 # BUILDING THE APP FOR PRODUCTION
 # =========================================
 # Below command is used to build the code which can be served by the webserver (Nginx)
+cd ~/web-tier
 npm run build
 
 # =========================================
