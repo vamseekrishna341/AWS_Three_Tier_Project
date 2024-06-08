@@ -7,7 +7,11 @@
 # =========================================
 #!/bin/bash
 cd ~
-sudo aws s3 cp s3://<your-bucket-name>/application-code/web-tier web-tier --recursive
+
+# !!! IMP !!!
+# MODIFY BELOW CODE WITH YOUR S3 BUCKET NAME
+sudo aws s3 cp s3://<YOUR-S3-BUCKET-NAME>/application-code/web-tier web-tier --recursive
+
 cd web-tier
 sudo chown -R ec2-user:ec2-user /home/ec2-user/web-tier
 sudo chmod -R 755 /home/ec2-user/web-tier
@@ -37,7 +41,10 @@ npm run build
 sudo yum install nginx -y	
 cd /etc/nginx
 sudo mv nginx.conf nginx-backup.conf
-sudo aws s3 cp s3://mys3bucket07062024/application-code/nginx.conf . 
+
+# !!! IMP !!!
+# MODIFY BELOW CODE WITH YOUR S3 BUCKET NAME
+sudo aws s3 cp s3://<YOUR-S3-BUCKET-NAME>/application-code/nginx.conf . 
 sudo chmod -R 755 /home/ec2-user
 sudo service nginx restart
 sudo chkconfig nginx on
