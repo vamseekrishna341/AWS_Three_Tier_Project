@@ -1,0 +1,43 @@
+# =========================================
+# COMMANDS TO RUN IN THE APPLICATION SERVER
+# =========================================
+
+# =========================================
+# COPY WEB-TIER CODE FROM S3
+# =========================================
+cd ~
+sudo aws s3 cp s3://<your-bucket-name>/application-code/web-tier web-tier --recursive
+cd web-tier
+sudo chown -R ec2-user:ec2-user /home/ec2-user/web-tier
+sudo chmod -R 755 /home/ec2-user/web-tier
+
+# =========================================
+# INSTALLING NODEJS (FOR USING REACT LIBRARY)
+# =========================================
+# (REF: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html)	
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 16
+nvm use 16
+npm install
+npm audit fix
+
+# =========================================
+# BUILDING THE APP FOR PRODUCTION
+# =========================================
+# Below command is used to build the code which can be served by the webserver (Nginx)
+npm run build
+
+# =========================================
+# INSTALLING NGINX (WEBSERVER)
+# =========================================
+# NOTE: Before using the nginx.conf file in below code, ensure to add the Internal-Load-Balancer-DNS in the nginx.conf file & upload it to S3
+
+sudo yum install nginx -y	
+cd /etc/nginx
+sudo mv nginx.conf nginx-backup.conf
+sudo aws s3 cp s3://mys3bucket07062024/application-code/nginx.conf . 
+sudo service nginx restart
+sudo service nginx status  #(Optional)
+sudo chmod -R 755 /home/ec2-user
+sudo chkconfig nginx on
