@@ -19,7 +19,10 @@ mysql --version
 # COPYING CONTENT FROM S3 BUCKET
 #===============================
 cd ~
-sudo aws s3 cp s3://<your-bucket-name>/application-code/app-tier app-tier --recursive
+
+# !!! IMP !!!
+# MODIFY BELOW CODE WITH YOUR S3 BUCKET NAME
+sudo aws s3 cp s3://<YOUR-S3-BUCKET-NAME>/application-code/app-tier app-tier --recursive
 cd app-tier
 sudo chown -R ec2-user:ec2-user /home/ec2-user/app-tier
 sudo chmod -R 755 /home/ec2-user/app-tier
