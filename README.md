@@ -10,71 +10,56 @@ In this architecture, a public-facing Application Load Balancer forwards client 
 
 ## Algorithm
 ### AWS PROJECT
-### CREATING 3 TIER ARCHITECTURE & INTEGRATING OTHER AWS RESOURCES
-
-STEP1: DOWNLOAD CODE FROM GITHUB IN YOUR LOCAL SYSTEM
-
-STEP2: CREATE TWO S3 BUCKETS 
-		- CREATE ONE S3 BUCKET FOR STORING WEB-SERVER & APP-SERVER CODE 
-		- UPLOAD THE CODE TO YOUR S3 FROM YOUR LOCAL SYSTEM
-		- CREATE ANOTHER S3 BUCKET FOR VPC FLOW LOGS
-
-STEP3: CREATE IAM ROLE WITH POLICIES:
-        - S3 READ ONLY
-        - SSM MANAGED INSTANCE CORE
-
-STEP4: CREATE VPC, SUBNETS, IGW, NAT-GW, RT
-		- ENABLE AUTO-ASSIGN PUBLIC IP FOR WEB-TIER PUBLIC SUBNETS
-		- CREATE FLOW LOGS FOR VPC & USE THE S3 BUCKET CREATED ABOVE
-		
-STEP5: CREATE SECURITY GROUPS
-        - 1. EXTERNAL-LOAD-BALANCER-SG --> HTTP (80): 0.0.0.0/0
-        - 2. WEB-TIER-SG --> HTTP --> EXT-LB-SG
-        - 3. INTERNAL-LOAD-BALANCER-SG --> HTTP --> WEB-TIER-SG
-        - 4. APP-TIER-SG --> PORT 4000 ---> INTERNAL-LB-SG
-        - 5. DB-TIER-SG --> MYSQL (3306) --> APP-TIER-SG
-
-STEP6: CREATE DB SUBNET GROUP & RDS
-        - CREATE DB SUBNET GROUP
-        - CREATE RDS
-          - Multi-AZ 
-          - Place them in DB subnet group created above
-
-STEP7: CREATE TEST APP SERVER, INSTALL PACKAGES, TEST CONNECTIONS
-		- TEST APP-SERVER COMMANDS LINK: 
-			https://github.com/pandacloud1/AWS_Project1/blob/main/app-server-commands
-        - CREATE AMI
-        - CREATE LAUNCH TEMPLATE USING AMI
-        - CREATE TARGET GROUP
-        - CREATE INTERNAL LOAD BALANCER
-        - CREATE AUTOSCALING GROUP
-		- EDIT NGINX.CONF FILE IN LOCAL SYSTEM BY ADDING INTERNAL-LB-DNS & UPLOAD THE FILE IN S3
-
-STEP8: CREATE TEST WEB SERVER, INSTALL PACKAGES (NGINX, NODEJS(REACT), TEST CONNECTIONS
-		- TEST WEB-SERVER COMMANDS LINK:
-			https://github.com/pandacloud1/AWS_Project1/blob/main/web-server-commands
-        - CREATE AMI
-        - CREATE LAUNCH TEMPLATE USING AMI
-        - CREATE TARGET GROUP
-        - CREATE EXTERNAL LOAD BALANCER
-        - CREATE AUTOSCALING GROUP
-
-STEP9: ADD EXTERNAL-ALB-DNS RECORD IN ROUTE53
-
-STEP10: CREATE CLOUDWATCH ALARMS ALONG WITH SNS
-
-STEP11: CREATE CLOUDTRAIL
-
-STEP12: DELETING THE ENTIRE INFRASTRUCTURE
-        - DELETE CLOUDFRONT
-        - DELETE CLOUDWATCH ALARMS
-        - DELETE RECORDS FROM ROUTE53
-        - DELETE LOAD BALANCERS, TARGET GROUPS, ASG, LAUNCH TEMPLATES
-        - DELETE SECURITY GROUP
-        - DELETE NAT GATEWAY (IT WILL TAKE 5 MINS)
-        - RELEASE ELASTIC IP
-        - DELETE VPC
-        - DELETE RDS SUBNET GROUP, RDS
+Creating 3 Tier Architecture & Integrating Other AWS Resources
+Step 1: Download Code from GitHub in Your Local System
+Step 2: Create Two S3 Buckets
+Create one S3 bucket for storing web-server & app-server code.
+Upload the code to your S3 from your local system.
+Create another S3 bucket for VPC flow logs.
+Step 3: Create IAM Role with Policies
+S3 read only.
+SSM managed instance core.
+Step 4: Create VPC, Subnets, IGW, NAT-GW, RT
+Enable auto-assign public IP for web-tier public subnets.
+Create flow logs for VPC & use the S3 bucket created above.
+Step 5: Create Security Groups
+External-Load-Balancer-SG --> HTTP (80): 0.0.0.0/0.
+Web-Tier-SG --> HTTP --> Ext-LB-SG.
+Internal-Load-Balancer-SG --> HTTP --> Web-Tier-SG.
+App-Tier-SG --> Port 4000 --> Internal-LB-SG.
+DB-Tier-SG --> MySQL (3306) --> App-Tier-SG.
+Step 6: Create DB Subnet Group & RDS
+Create DB subnet group.
+Create RDS - Multi-AZ.
+Place them in DB subnet group created above.
+Step 7: Create Test App Server, Install Packages, Test Connections
+Test App-Server Commands
+Create AMI.
+Create launch template using AMI.
+Create target group.
+Create internal load balancer.
+Create autoscaling group.
+Edit nginx.conf file in local system by adding Internal-LB-DNS & upload the file in S3.
+Step 8: Create Test Web Server, Install Packages (Nginx, Node.js (React)), Test Connections
+Test Web-Server Commands
+Create AMI.
+Create launch template using AMI.
+Create target group.
+Create external load balancer.
+Create autoscaling group.
+Step 9: Add External-ALB-DNS Record in Route 53
+Step 10: Create CloudWatch Alarms Along with SNS
+Step 11: Create CloudTrail
+Step 12: Deleting the Entire Infrastructure
+Delete CloudFront.
+Delete CloudWatch alarms.
+Delete records from Route 53.
+Delete load balancers, target groups, ASG, launch templates.
+Delete security group.
+Delete NAT gateway (it will take 5 mins).
+Release elastic IP.
+Delete VPC.
+Delete RDS subnet group, RDS.
 
 ## Workshop Instructions:
 
