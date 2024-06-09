@@ -1,5 +1,5 @@
 # =========================================
-# COMMANDS TO RUN IN THE APPLICATION SERVER
+# COMMANDS TO RUN IN THE WEB SERVER
 # =========================================
 
 # =========================================
@@ -7,13 +7,12 @@
 # =========================================
 #!/bin/bash
 sudo -su ec2-user
-cd ~
+cd /home/ec2-user
 
 # !!! IMP !!!
 # MODIFY BELOW CODE WITH YOUR S3 BUCKET NAME
 sudo aws s3 cp s3://<YOUR-S3-BUCKET-NAME>/application-code/web-tier web-tier --recursive
-sudo chown -R ec2-user:ec2-user /home/ec2-user/web-tier
-sudo chmod -R 755 /home/ec2-user/web-tier
+sudo chown -R ec2-user:ec2-user /home/ec2-user
 sudo chmod -R 755 /home/ec2-user
 
 # =========================================
@@ -24,7 +23,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 source ~/.bashrc
 nvm install 16
 nvm use 16
-cd ~/web-tier
+cd /home/ec2-user/web-tier
 npm install
 #npm audit fix
 
@@ -32,12 +31,13 @@ npm install
 # BUILDING THE APP FOR PRODUCTION
 # =========================================
 # Below command is used to build the code which can be served by the webserver (Nginx)
-cd ~/web-tier
+cd /home/ec2-user/web-tier
 npm run build
 
 # =========================================
 # INSTALLING NGINX (WEBSERVER)
 # =========================================
+# (REF: https://dev.to/0xfedev/how-to-install-nginx-as-reverse-proxy-and-configure-certbot-on-amazon-linux-2023-2cc9)
 # NOTE: Before using the nginx.conf file in below code, ensure to add the Internal-Load-Balancer-DNS in the nginx.conf file & upload it to S3
 
 sudo yum install nginx -y	
