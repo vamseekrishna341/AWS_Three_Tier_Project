@@ -15,6 +15,9 @@ sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023
 sudo dnf install mysql-community-client -y
 mysql --version
 
+# TO TEST CONNECTION BETWEEN APP-SERVER & DATABASE SERVER
+mysql -h <RDS-Endpoint> -u <username> -p <Hit Enter & provide your password>
+
 #===============================
 # COPYING CONTENT FROM S3 BUCKET
 #===============================
